@@ -1,10 +1,18 @@
-So I have Used python to try solving this question . You will find all the plots and code in "q2.ipynb" . I will tell whatever I understood while solving this problem . So first I loaded the given audio to code with scipy wavefile.read functon . This function gives us the sampling frequency and the modulated wave array . So the sampling frequecy is 44.1k and audio file was about 2 seconds long so naturally the length of modulated array was around ~87 k . Then I made the times array which is a list containg all the times at which a sample was taken . Then plotted the modulated signal for the first 1000 samples (t[:1000] , modulated[:1000]) . Then I plotted fft of the modulated signal which scipy.fft function which made it really easy . I got to know online that in case of Amplitude Modulation , carrier frequency is usually the one with the highest magnitude. Now carrier frequency was calculated mathematically which I got around ~10.5 kHz . So to reverse modulate this carrier frequency I multiplied the modulated wave with cos(2pi * fc * t) which now leaves the high frequency jump . So then I designed a pretty standard band-pass filter (actually copied from internet) & gave the pass frequency as (300 ,4000) as nothing was mentioned about this band in the question . Then Plotted a pretty comparative graph Before and After Demodulation for the first 1000 samples. Working on this question really sparked my curiosity and made me learn new crazy things .
+
 
 # 🎧 Modulated Audio Signal Processing
 
 This repository contains my solution to the **Modulated Audio Signal Processing** task using Python. The goal was to demodulate a given AM (Amplitude Modulated) audio signal, clean it using a bandpass filter, and recover the original audio.
 
 ---
+## 🎯 Objective
+
+- Analyze and demodulate a modulated audio signal  
+- Identify the carrier frequency using FFT  
+- Recover the original audio signal via demodulation  
+- Apply bandpass filtering to reduce noise  
+- Visualize the entire process through plots
+
 
 ## 📁 Files Included
 
@@ -25,4 +33,54 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
 - Created a time array using:
   ```python
   t = np.arange(len(modulated)) / sampling_rate
+  ```
+### 3. 📊 Visualizing the Modulated Signal
+- Plotted the first 1000 samples of the modulated signal to get an idea of its shape:
+  ```python
+  plt.plot(t[:1000], modulated[:1000])
+  plt.title("Modulated Signal (First 1000 Samples)")
+  ```
+### 4. ⚡ FFT Analysis
+- Used `scipy.fft` to perform a Fast Fourier Transform on the modulated signal.
+- This converts the signal from the time domain to the frequency domain.
+- Plotted the magnitude spectrum to find the **carrier frequency**:
+  ```python
+  fft_vals = np.abs(fft(modulated))
+  freqs = fftfreq(len(modulated), 1 / sampling_rate)
+  ```
+### 5. 🎛️ Demodulation
+- To demodulate the AM signal, multiplied it with a cosine wave at the carrier frequency:
+  ```python
+  demodulated = modulated * np.cos(2 * np.pi * fc * t)
+  ```
+### 6. 🎚️ Bandpass Filtering
+- Designed a bandpass filter using `scipy.signal.butter` and ` sosfiltfilt`:
+  ```python
+  sos = butter(poles, edges, 'bandpass', fs=sample_rate, output='sos')
+    filtered_data = sosfiltfilt(sos, data) ```
+### 7. 📈 Comparison Plot
+- Plotted both the raw demodulated signal and the filtered signal to visualize the improvement:
+  ```python
+  plt.plot(t[:1000], demodulated[:1000], label="Before Filtering")
+  plt.plot(t[:1000], filtered[:1000], label="After Filtering")
+  plt.legend()```
+  
+### 8. 🔊 Saving the Cleaned Audio
+- Used `scipy.io.wavfile.write()` to export the filtered signal as a `.wav` file:
+  ```python
+  write("filtered_output.wav", sampling_rate, filtered.astype(np.int16))```
+
+## 🚀 Final Thoughts
+
+Working on this task sparked my curiosity about signal processing and modulation.  
+It helped me understand core concepts like FFT, AM demodulation, and filtering.  
+I also learned how to visualize and clean real-world noisy signals using Python tools.
+
+Thanks for reading! 🎧
+
+
+
+
+  
+
 
