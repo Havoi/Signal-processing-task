@@ -2,7 +2,10 @@
 
 # 🎧 Modulated Audio Signal Processing
 
-This repository contains my solution to the **Modulated Audio Signal Processing** task using Python. The goal was to demodulate a given AM (Amplitude Modulated) audio signal, clean it using a bandpass filter, and recover the original audio.
+This repository contains my solution to the **Modulated Audio Signal Processing** task using Python. The goal was to demodulate a given AM (Amplitude Modulated) audio signal, clean it using a bandpass filter, and recover the original audio. This question was worked in a virtual environment so I have attached a requirements.txt file that you can use to recreate that environment       ```python
+
+    pip install -r requirements.txt
+     ```
 
 ---
 ## 🎯 Objective
