@@ -13,6 +13,7 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
 - Recover the original audio signal via demodulation  
 - Apply bandpass filtering to reduce noise  
 - Visualize the entire process through plots
+[🎧 Listen to the original audio (given in question)](modulated_noisy_audio.wav)
 
 
 ## 📁 Files Included
@@ -41,6 +42,8 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
   plt.plot(t[:1000], modulated[:1000])
   plt.title("Modulated Signal")
   ```
+  ![Plot](plots/modulated.png)
+
 ### 4. FFT Analysis
 - Used `scipy.fft` to perform a Fast Fourier Transform on the modulated signal.
 - This converts the signal from the time domain to the frequency domain.
@@ -49,11 +52,14 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
   fft_vals = np.abs(fft(modulated))
   freqs = fftfreq(len(modulated), 1 / sampling_rate)
   ```
+  ![Plot](plots/modulated(fft).png)
+
 ### 5. Demodulation
 - To demodulate the AM signal, multiplied it with a cosine wave at the carrier frequency:
   ```python
   demodulated = modulated * np.cos(2 * np.pi * sampling_rate * times)
   ```
+  ![Plot](plots/demodulated(fft).png)
 ### 6. Bandpass Filtering
 - Designed a bandpass filter using `scipy.signal.butter` and ` sosfiltfilt`:
   ```python
@@ -63,16 +69,18 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
 ### 7. Comparison Plot
 - Plotted both the raw demodulated signal and the filtered signal to visualize the improvement:
   ```python
-  plt.plot(times[:1000], demodulated[:1000], label="Before Filtering")
-  plt.plot(times[:1000], filtered[:1000], label="After Filtering")
+  plt.plot(times[:1000], modulated[:1000], label="Original Modulated")
+  plt.plot(times[:1000], filtered[:1000], label="Recovered Audio")
   plt.legend()
   ```
+  ![Plot](plots/beforevsafter.png)
   
 ### 8. Saving the Cleaned Audio
 - Used `scipy.io.wavfile.write()` to export the filtered signal as a `.wav` file:
   ```python
   write("filtered_output.wav", sampling_rate, filtered.astype(np.int16))
   ```
+[🎧 Listen to the filtered audio](filtered_output.wav)
 
 ## 🚀 Final Thoughts
 
