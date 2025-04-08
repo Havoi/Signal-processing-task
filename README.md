@@ -13,6 +13,7 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
 - Recover the original audio signal via demodulation  
 - Apply bandpass filtering to reduce noise  
 - Visualize the entire process through plots
+  
 [🎧 Listen to the original audio (given in question)](modulated_noisy_audio.wav)
 
 
