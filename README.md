@@ -34,13 +34,13 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
   ```python
   t = np.arange(len(modulated)) / sampling_rate
   ```
-### 3. 📊 Visualizing the Modulated Signal
+### 3. Visualizing the Modulated Signal
 - Plotted the first 1000 samples of the modulated signal to get an idea of its shape:
   ```python
   plt.plot(t[:1000], modulated[:1000])
   plt.title("Modulated Signal (First 1000 Samples)")
   ```
-### 4. ⚡ FFT Analysis
+### 4. FFT Analysis
 - Used `scipy.fft` to perform a Fast Fourier Transform on the modulated signal.
 - This converts the signal from the time domain to the frequency domain.
 - Plotted the magnitude spectrum to find the **carrier frequency**:
@@ -48,27 +48,30 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
   fft_vals = np.abs(fft(modulated))
   freqs = fftfreq(len(modulated), 1 / sampling_rate)
   ```
-### 5. 🎛️ Demodulation
+### 5. Demodulation
 - To demodulate the AM signal, multiplied it with a cosine wave at the carrier frequency:
   ```python
   demodulated = modulated * np.cos(2 * np.pi * fc * t)
   ```
-### 6. 🎚️ Bandpass Filtering
+### 6. Bandpass Filtering
 - Designed a bandpass filter using `scipy.signal.butter` and ` sosfiltfilt`:
   ```python
   sos = butter(poles, edges, 'bandpass', fs=sample_rate, output='sos')
-    filtered_data = sosfiltfilt(sos, data) ```
-### 7. 📈 Comparison Plot
+    filtered_data = sosfiltfilt(sos, data)
+  ```
+### 7. Comparison Plot
 - Plotted both the raw demodulated signal and the filtered signal to visualize the improvement:
   ```python
   plt.plot(t[:1000], demodulated[:1000], label="Before Filtering")
   plt.plot(t[:1000], filtered[:1000], label="After Filtering")
-  plt.legend()```
+  plt.legend()
+  ```
   
-### 8. 🔊 Saving the Cleaned Audio
+### 8. Saving the Cleaned Audio
 - Used `scipy.io.wavfile.write()` to export the filtered signal as a `.wav` file:
   ```python
-  write("filtered_output.wav", sampling_rate, filtered.astype(np.int16))```
+  write("filtered_output.wav", sampling_rate, filtered.astype(np.int16))
+  ```
 
 ## 🚀 Final Thoughts
 
