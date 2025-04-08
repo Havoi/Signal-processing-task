@@ -40,7 +40,7 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
 ### 3. Visualizing the Modulated Signal
 - Plotted the first 1000 samples of the modulated signal to get an idea of its shape:
   ```python
-  plt.plot(t[:1000], modulated[:1000])
+  plt.plot(times[:1000], modulated[:1000])
   plt.title("Modulated Signal")
   ```
   ![Plot](plots/modulated.png)
@@ -62,10 +62,12 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
   ```
   ![Plot](plots/demodulated(fft).png)
 ### 6. Bandpass Filtering
-- Designed a bandpass filter using `scipy.signal.butter` and ` sosfiltfilt`:
+- Designed a bandpass filter using `scipy.signal.butter` and ` sosfiltfilt` (basically copied from the internet ;) ) , Used the Band pass for frequencies in range (300,4000):
   ```python
-  sos = butter(poles, edges, 'bandpass', fs=sampling_rate, output='sos')
+  def bandpass(data: np.ndarray, edges: list[float], sample_rate: float, poles: int = 5):
+    sos = butter(poles, edges, 'bandpass', fs=sample_rate, output='sos')
     filtered_data = sosfiltfilt(sos, data)
+    return filtered_data
   ```
 ### 7. Comparison Plot
 - Plotted both the raw demodulated signal and the filtered signal to visualize the improvement:
