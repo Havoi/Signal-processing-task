@@ -58,7 +58,7 @@ This repository contains my solution to the **Modulated Audio Signal Processing*
 ### 5. Demodulation
 - To demodulate the AM signal, multiplied it with a cosine wave at the carrier frequency:
   ```python
-  demodulated = modulated * np.cos(2 * np.pi * sampling_rate * times)
+  demodulated = modulated * np.sin(2 * np.pi * sampling_rate * times)
   ```
   ![Plot](plots/demodulated(fft).png)
 ### 6. Bandpass Filtering
